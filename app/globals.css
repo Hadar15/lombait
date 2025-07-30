@@ -1,0 +1,202 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-inter: 'Inter', sans-serif;
+  --font-montserrat: 'Montserrat', sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 180 100% 50%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 180 100% 50%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 180 100% 50%;
+    --radius: 1rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-inter;
+  }
+  
+  .font-montserrat {
+    font-family: var(--font-montserrat);
+  }
+  
+  .font-inter {
+    font-family: var(--font-inter);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00FFE0;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00CCC0;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Text glow effect */
+.text-glow {
+  text-shadow: 0 0 20px rgba(0, 255, 224, 0.5);
+}
+
+/* Card glow effect */
+.card-glow {
+  box-shadow: 0 0 30px rgba(0, 255, 224, 0.1);
+}
+
+.card-glow:hover {
+  box-shadow: 0 0 50px rgba(0, 255, 224, 0.3);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(45deg, #FFFFFF, #00FFE0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Infinite marquee animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.marquee {
+  animation: marquee 20s linear infinite;
+}
+
+/* Button glow effect */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-glow:hover::before {
+  left: 100%;
+}
+
+/* Responsive container */
+.container {
+  @apply mx-auto px-4 sm:px-6 lg:px-8;
+  max-width: 1280px;
+}
+
+/* Responsive typography */
+@media (max-width: 640px) {
+  .text-responsive {
+    font-size: clamp(1rem, 4vw, 1.5rem);
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .text-responsive {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+  }
+}
+
+@media (min-width: 1025px) {
+  .text-responsive {
+    font-size: clamp(2.5rem, 2.5vw, 4rem);
+  }
+}
+
+/* Responsive spacing */
+.responsive-padding {
+  @apply px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16 xl:py-20;
+}
+
+/* Responsive grid */
+.responsive-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8;
+}
+
+/* Responsive flex */
+.responsive-flex {
+  @apply flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8;
+}
+
+/* Responsive text sizes */
+.text-responsive-xs { @apply text-xs sm:text-sm lg:text-base; }
+.text-responsive-sm { @apply text-sm sm:text-base lg:text-lg; }
+.text-responsive-base { @apply text-base sm:text-lg lg:text-xl; }
+.text-responsive-lg { @apply text-lg sm:text-xl lg:text-2xl; }
+.text-responsive-xl { @apply text-xl sm:text-2xl lg:text-3xl; }
+.text-responsive-2xl { @apply text-2xl sm:text-3xl lg:text-4xl; }
+.text-responsive-3xl { @apply text-3xl sm:text-4xl lg:text-5xl; }
+.text-responsive-4xl { @apply text-4xl sm:text-5xl lg:text-6xl; }
+.text-responsive-5xl { @apply text-5xl sm:text-6xl lg:text-7xl; }
+
+/* Responsive spacing */
+.space-responsive-xs { @apply space-y-2 sm:space-y-3 lg:space-y-4; }
+.space-responsive-sm { @apply space-y-3 sm:space-y-4 lg:space-y-6; }
+.space-responsive-base { @apply space-y-4 sm:space-y-6 lg:space-y-8; }
+.space-responsive-lg { @apply space-y-6 sm:space-y-8 lg:space-y-12; }
+.space-responsive-xl { @apply space-y-8 sm:space-y-12 lg:space-y-16; }
+
+/* Responsive margins */
+.margin-responsive-xs { @apply m-2 sm:m-3 lg:m-4; }
+.margin-responsive-sm { @apply m-3 sm:m-4 lg:m-6; }
+.margin-responsive-base { @apply m-4 sm:m-6 lg:m-8; }
+.margin-responsive-lg { @apply m-6 sm:m-8 lg:m-12; }
+.margin-responsive-xl { @apply m-8 sm:m-12 lg:m-16; }
+
+/* Responsive padding */
+.padding-responsive-xs { @apply p-2 sm:p-3 lg:p-4; }
+.padding-responsive-sm { @apply p-3 sm:p-4 lg:p-6; }
+.padding-responsive-base { @apply p-4 sm:p-6 lg:p-8; }
+.padding-responsive-lg { @apply p-6 sm:p-8 lg:p-12; }
+.padding-responsive-xl { @apply p-8 sm:p-12 lg:p-16; }
