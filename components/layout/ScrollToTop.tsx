@@ -15,7 +15,7 @@ export default function ScrollToTop() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       // Check if this is the first load (no scroll position saved)
-      if (window.history.scrollRestoration) {
+      if ('scrollRestoration' in window.history) {
         window.history.scrollRestoration = 'manual';
       }
       window.scrollTo(0, 0);

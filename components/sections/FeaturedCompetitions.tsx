@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Calendar, MapPin, Users, Trophy, Sparkles, Search, Filter, Star, Clock, Award } from 'lucide-react';
+import { Calendar, MapPin, Users, Trophy, Sparkles, Search, Filter, Clock } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { useState } from 'react';
 

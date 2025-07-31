@@ -10,7 +10,7 @@ export default function HeroSection() {
 
   // Fungsi scroll ke section berikutnya
   function scrollToNext() {
-    const nextSection = document.getElementById('after-hero');
+    const nextSection = document.getElementById('after-hero') as HTMLElement;
     if (nextSection) {
       nextSection.scrollIntoView({ behavior: 'smooth' });
     }

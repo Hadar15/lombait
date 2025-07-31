@@ -30,7 +30,7 @@ export default function Navbar() {
   const handleNavigationClick = (href: string, e: React.MouseEvent) => {
     if (href.startsWith('#')) {
       e.preventDefault();
-      const element = document.querySelector(href);
+      const element = document.querySelector(href) as HTMLElement;
       if (element) {
         const navbarHeight = 96; // Approximate navbar height
         const elementPosition = element.offsetTop - navbarHeight;
