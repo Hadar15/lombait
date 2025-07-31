@@ -90,22 +90,25 @@ export async function getCompetitionsFromSheet(): Promise<Competition[]> {
       // G: Registration Deadline, H: Organizer, I: Image URL, J: Status, 
       // K: Category, L: Tags, M: Website URL, N: Requirements, O: Event Date
       
+      // Ensure we have at least 14 columns
+      const safeRow = Array.isArray(row) ? row : [];
+      
       return {
-        id: row[0] || `comp-${index + 1}`,
-        title: row[1] || '',
-        description: row[2] || '',
-        participants: parseInt(row[3]) || 0,
-        prize: row[4] || '',
-        location: row[5] || '',
-        registrationDeadline: row[6] || '',
-        organizer: row[7] || '',
-        image: row[8] || 'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=800&h=400&fit=crop&crop=center', // Default image
-        status: (row[9] as 'Active' | 'Upcoming' | 'Completed') || 'Upcoming',
-        category: row[10] || '',
-        tags: row[11] ? row[11].split(',').map((tag: string) => tag.trim()) : [],
-        website: row[12] || '',
-        requirements: row[13] || '',
-        eventDate: row[14] || '', // Event Date ada di kolom O (index 14)
+        id: safeRow[0] || `comp-${index + 1}`,
+        title: safeRow[1] || 'Untitled Competition',
+        description: safeRow[2] || 'No description available',
+        participants: parseInt(safeRow[3]) || 0,
+        prize: safeRow[4] || 'TBA',
+        location: safeRow[5] || 'TBA',
+        registrationDeadline: safeRow[6] || 'TBA',
+        organizer: safeRow[7] || 'TBA',
+        image: safeRow[8] || 'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=800&h=400&fit=crop&crop=center',
+        status: (safeRow[9] as 'Active' | 'Upcoming' | 'Completed') || 'Upcoming',
+        category: safeRow[10] || 'General',
+        tags: safeRow[11] ? safeRow[11].split(',').map((tag: string) => tag.trim()) : ['General'],
+        website: safeRow[12] || '',
+        requirements: safeRow[13] || 'No specific requirements',
+        eventDate: safeRow[14] || '', // Event Date ada di kolom O (index 14)
       };
     });
 

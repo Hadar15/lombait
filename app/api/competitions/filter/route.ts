@@ -1,17 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getFilteredCompetitions, Competition } from '@/lib/google-sheets';
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     console.log('🚀 API Route: /api/competitions/filter called');
     
-    const { searchParams } = new URL(request.url);
-    const category = searchParams.get('category');
-    const status = searchParams.get('status');
-    const search = searchParams.get('search');
-
-    console.log('🔍 Query parameters:', { category, status, search });
-
     // Check if environment variables are set
     const hasGoogleSheetsConfig = process.env.GOOGLE_SHEETS_CLIENT_EMAIL && 
                                  process.env.GOOGLE_SHEETS_PRIVATE_KEY && 
@@ -22,30 +15,23 @@ export async function GET(request: Request) {
       return NextResponse.json({ competitions: [] });
     }
 
-    // Try to fetch filtered competitions from Google Sheets
-    let competitions: Competition[] = [];
-    try {
-      console.log('🔍 Fetching filtered competitions from Google Sheets');
-      competitions = await getFilteredCompetitions({
-        category: category || undefined,
-        status: status || undefined,
-        search: search || undefined,
-      });
-      
-    } catch (sheetsError) {
-      console.error('❌ Google Sheets error:', sheetsError);
-      console.log('⚠️ Returning empty array due to Google Sheets error');
-      competitions = [];
-    }
+    // For now, return all competitions without filtering
+    // Filtering can be implemented later if needed
+    console.log('🔍 Fetching all competitions from Google Sheets');
+    const competitions: Competition[] = await getFilteredCompetitions({
+      category: undefined,
+      status: undefined,
+      search: undefined,
+    });
 
-    console.log('✅ Returning', competitions.length, 'filtered competitions');
+    console.log('✅ Returning', competitions.length, 'competitions');
     return NextResponse.json({ competitions });
     
   } catch (error) {
     console.error('❌ Error in /api/competitions/filter:', error);
     return NextResponse.json({ 
       competitions: [],
-      error: 'Failed to fetch filtered competitions'
+      error: 'Failed to fetch competitions'
     });
   }
 } 

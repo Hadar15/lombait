@@ -1,0 +1,22 @@
+{
+  "functions": {
+    "app/api/competitions/route.ts": {
+      "maxDuration": 30
+    },
+    "app/api/competitions/filter/route.ts": {
+      "maxDuration": 30
+    },
+    "app/api/debug/route.ts": {
+      "maxDuration": 10
+    },
+    "app/api/test-connection/route.ts": {
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
+    }
+  ]
+} 
