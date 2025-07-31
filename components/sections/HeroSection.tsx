@@ -86,7 +86,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden px-4 md:px-8 pt-16 sm:pt-20 md:pt-24 lg:pt-28">
+    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden px-4 md:px-8 pt-8 sm:pt-12 md:pt-16 lg:pt-20">
       {/* Particle Canvas Animation */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-0" />
       {/* Background Elements */}
@@ -102,7 +102,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="mb-8 sm:mb-12 lg:mb-16 mt-8 sm:mt-12 md:mt-16 lg:mt-20"
+            className="mb-8 sm:mb-12 lg:mb-16 mt-4 sm:mt-6 md:mt-8 lg:mt-10"
           >
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-6 sm:mb-8 lg:mb-10 leading-tight drop-shadow-lg">
               Platform Lomba IT
@@ -143,7 +143,7 @@ export default function HeroSection() {
       </div>
       {/* Scroll Down Indicator - only on desktop */}
       <motion.div
-        className="hidden md:flex absolute bottom-16 left-1/2 transform -translate-x-1/2 cursor-pointer z-20"
+        className="hidden md:flex absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer z-20"
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
         onClick={scrollToNext}
