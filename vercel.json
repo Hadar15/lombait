@@ -17,6 +17,9 @@
     },
     "app/api/cron/update-competitions/route.ts": {
       "maxDuration": 30
+    },
+    "app/api/revalidate/route.ts": {
+      "maxDuration": 10
     }
   },
   "rewrites": [

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getCompetitionsFromSheet } from '@/lib/google-sheets';
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     console.log('🚀 API Route: /api/competitions called');
     console.log('⏰ Timestamp:', new Date().toISOString());
@@ -26,11 +26,19 @@ export async function GET() {
     console.log('✅ Returning', competitions.length, 'competitions from Google Sheets');
     console.log('📊 Competition IDs:', competitions.map(c => c.id));
     
-    // Add cache-busting headers
-    const response = NextResponse.json({ competitions });
-    response.headers.set('Cache-Control', 'no-store, must-revalidate');
+    // Force no cache for production
+    const response = NextResponse.json({ 
+      competitions,
+      timestamp: new Date().toISOString(),
+      cache: 'disabled'
+    });
+    
+    // Aggressive cache busting for Vercel
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     response.headers.set('Pragma', 'no-cache');
     response.headers.set('Expires', '0');
+    response.headers.set('Surrogate-Control', 'no-store');
+    response.headers.set('X-Cache-Status', 'MISS');
     
     return response;
     
