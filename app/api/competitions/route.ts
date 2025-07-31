@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getCompetitionsFromSheet } from '@/lib/google-sheets';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET(request: Request) {
   try {
     console.log('🚀 API Route: /api/competitions called');
@@ -30,15 +34,19 @@ export async function GET(request: Request) {
     const response = NextResponse.json({ 
       competitions,
       timestamp: new Date().toISOString(),
-      cache: 'disabled'
+      cache: 'disabled',
+      version: Date.now()
     });
     
-    // Aggressive cache busting for Vercel
-    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    // Ultra aggressive cache busting for Vercel
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
     response.headers.set('Pragma', 'no-cache');
     response.headers.set('Expires', '0');
     response.headers.set('Surrogate-Control', 'no-store');
     response.headers.set('X-Cache-Status', 'MISS');
+    response.headers.set('X-Content-Type-Options', 'nosniff');
+    response.headers.set('X-Frame-Options', 'DENY');
+    response.headers.set('X-XSS-Protection', '1; mode=block');
     
     return response;
     

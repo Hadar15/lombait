@@ -6,6 +6,10 @@ import Footer from '@/components/layout/Footer';
 import PageTransitionWrapper from '@/components/animations/PageTransitionWrapper';
 import ScrollToTop from '@/components/layout/ScrollToTop';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: 'Lomba.it - Platform Lomba IT Terlengkap',
   description: 'Temukan lomba IT terbaik di satu tempat. Platform terlengkap untuk kompetisi teknologi, hackathon, dan event IT.',

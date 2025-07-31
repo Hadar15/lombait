@@ -6,7 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Calendar, MapPin, Users, Trophy, Sparkles, Search } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import RefreshButton from '@/components/ui/refresh-button';
 
 interface Competition {
   id: string;
@@ -36,61 +37,75 @@ export default function FeaturedCompetitions() {
   const [competitions, setCompetitions] = useState<Competition[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchCompetitions() {
-      try {
-        console.log('🔍 Fetching competitions from API...');
-        
-        // Add cache-busting parameter
-        const timestamp = new Date().getTime();
-        const response = await fetch(`/api/competitions?t=${timestamp}`, {
-          cache: 'no-store',
-          headers: {
-            'Cache-Control': 'no-cache',
-            'Pragma': 'no-cache'
-          }
-        });
-        
-        if (!response.ok) {
-          console.error('❌ HTTP error:', response.status, response.statusText);
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        console.log('✅ API Response:', data);
-        console.log('📊 Number of competitions:', data.competitions?.length || 0);
-        
-        if (data.error) {
-          console.error('❌ API returned error:', data.error);
-          throw new Error(data.error);
-        }
-        
-        // Check if data has competitions array
-        if (data.competitions && Array.isArray(data.competitions)) {
-          console.log('✅ Valid competitions data received');
-          console.log('📋 Competition IDs:', data.competitions.map((c: any) => c.id));
-          setCompetitions(data.competitions);
-          console.log('✅ Set competitions:', data.competitions.length, 'items');
-        } else {
-          console.error('❌ Invalid API response format:', data);
-          throw new Error('Invalid API response format');
-        }
-      } catch (error) {
-        console.error('❌ Error fetching competitions:', error);
-        console.error('🔍 Error details:', {
-          message: error instanceof Error ? error.message : 'Unknown error',
-          stack: error instanceof Error ? error.stack : undefined
-        });
-        
-        // Set empty array instead of fallback data
-        setCompetitions([]);
-      } finally {
-        setLoading(false);
+  const fetchCompetitions = useCallback(async () => {
+    try {
+      console.log('🔍 Fetching competitions from API...');
+      
+      // Add multiple cache-busting parameters
+      const timestamp = new Date().getTime();
+      const random = Math.random();
+      const response = await fetch(`/api/competitions?t=${timestamp}&r=${random}&v=${Date.now()}`, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate, proxy-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+          'Surrogate-Control': 'no-store'
+        },
+        next: { revalidate: 0 }
+      });
+      
+      if (!response.ok) {
+        console.error('❌ HTTP error:', response.status, response.statusText);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+      
+      const data = await response.json();
+      console.log('✅ API Response:', data);
+      console.log('📊 Number of competitions:', data.competitions?.length || 0);
+      
+      if (data.error) {
+        console.error('❌ API returned error:', data.error);
+        throw new Error(data.error);
+      }
+      
+      // Check if data has competitions array
+      if (data.competitions && Array.isArray(data.competitions)) {
+        console.log('✅ Valid competitions data received');
+        console.log('📋 Competition IDs:', data.competitions.map((c: any) => c.id));
+        setCompetitions(data.competitions);
+        console.log('✅ Set competitions:', data.competitions.length, 'items');
+      } else {
+        console.error('❌ Invalid API response format:', data);
+        throw new Error('Invalid API response format');
+      }
+    } catch (error) {
+      console.error('❌ Error fetching competitions:', error);
+      console.error('🔍 Error details:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined
+      });
+      
+      // Set empty array instead of fallback data
+      setCompetitions([]);
+    } finally {
+      setLoading(false);
     }
-
-    fetchCompetitions();
   }, []);
+
+  useEffect(() => {
+    fetchCompetitions();
+  }, [fetchCompetitions]);
+
+  // Auto-refresh every 30 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log('🔄 Auto-refreshing competitions data...');
+      fetchCompetitions();
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, [fetchCompetitions]);
 
   const filteredCompetitions = competitions.filter(competition => {
     const matchesSearch = competition.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -199,6 +214,11 @@ export default function FeaturedCompetitions() {
                 className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
               />
             </div>
+            {/* Refresh Button */}
+            <RefreshButton 
+              onRefresh={fetchCompetitions}
+              className="shrink-0"
+            />
           </div>
         </motion.div>
 
