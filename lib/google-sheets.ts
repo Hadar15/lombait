@@ -31,12 +31,10 @@ export interface Competition {
 export async function getCompetitionsFromSheet(): Promise<Competition[]> {
   try {
     const spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
-    const range = 'Competitions!A2:N'; // Range disesuaikan dengan kolom yang ada
-
+    
     // Debug logging
     console.log('🔍 Attempting to fetch competitions from Google Sheets...');
     console.log('📊 Spreadsheet ID:', spreadsheetId ? 'Set' : 'NOT SET');
-    console.log('📋 Range:', range);
     console.log('🔑 Client Email:', process.env.GOOGLE_SHEETS_CLIENT_EMAIL ? 'Set' : 'NOT SET');
     console.log('🔑 Private Key:', process.env.GOOGLE_SHEETS_PRIVATE_KEY ? 'Set' : 'NOT SET');
 
@@ -69,13 +67,51 @@ export async function getCompetitionsFromSheet(): Promise<Competition[]> {
 
     const sheets = google.sheets({ version: 'v4', auth });
 
-    const response = await sheets.spreadsheets.values.get({
+    // First, let's get the sheet metadata to understand the structure
+    console.log('📋 Getting sheet metadata...');
+    const sheetResponse = await sheets.spreadsheets.get({
       spreadsheetId,
-      range,
     });
 
-    const rows = response.data.values;
-    console.log('📈 Rows fetched:', rows ? rows.length : 0);
+    const sheetNames = sheetResponse.data.sheets?.map(sheet => sheet.properties?.title);
+    console.log('📋 Available sheets:', sheetNames);
+
+    // Try different ranges to ensure we get all data
+    const ranges = [
+      'Competitions!A2:O',  // Full range including Event Date
+      'Competitions!A2:N',  // Without Event Date
+      'Competitions!A:O',   // All columns including header
+      'Competitions!A:N',   // All columns without Event Date
+    ];
+
+    let rows: any[][] = [];
+    let usedRange = '';
+
+    for (const range of ranges) {
+      try {
+        console.log(`🔍 Trying range: ${range}`);
+        const response = await sheets.spreadsheets.values.get({
+          spreadsheetId,
+          range,
+        });
+
+        const currentRows = response.data.values;
+        console.log(`📈 Rows found with range ${range}:`, currentRows ? currentRows.length : 0);
+        
+        if (currentRows && currentRows.length > 0) {
+          rows = currentRows;
+          usedRange = range;
+          console.log(`✅ Using range: ${range}`);
+          break;
+        }
+      } catch (error) {
+        console.log(`❌ Range ${range} failed:`, error);
+        continue;
+      }
+    }
+
+    console.log('📈 Final rows count:', rows.length);
+    console.log('📋 All rows from Google Sheets:', JSON.stringify(rows, null, 2));
     
     if (!rows || rows.length === 0) {
       console.log('⚠️ No data found in spreadsheet');
@@ -85,13 +121,27 @@ export async function getCompetitionsFromSheet(): Promise<Competition[]> {
     const competitions = rows.map((row, index) => {
       console.log(`📝 Processing row ${index + 1}:`, row);
       
-      // Mapping sesuai dengan format Google Sheets Anda:
-      // A: ID, B: Title, C: Description, D: Participants, E: Prize, F: Location, 
-      // G: Registration Deadline, H: Organizer, I: Image URL, J: Status, 
-      // K: Category, L: Tags, M: Website URL, N: Requirements, O: Event Date
-      
       // Ensure we have at least 14 columns
       const safeRow = Array.isArray(row) ? row : [];
+      
+      // Log the raw data for debugging
+      console.log(`🔍 Raw data for row ${index + 1}:`, {
+        id: safeRow[0],
+        title: safeRow[1],
+        description: safeRow[2],
+        participants: safeRow[3],
+        prize: safeRow[4],
+        location: safeRow[5],
+        registrationDeadline: safeRow[6],
+        organizer: safeRow[7],
+        image: safeRow[8],
+        status: safeRow[9],
+        category: safeRow[10],
+        tags: safeRow[11],
+        website: safeRow[12],
+        requirements: safeRow[13],
+        eventDate: safeRow[14],
+      });
       
       return {
         id: safeRow[0] || `comp-${index + 1}`,
@@ -108,12 +158,13 @@ export async function getCompetitionsFromSheet(): Promise<Competition[]> {
         tags: safeRow[11] ? safeRow[11].split(',').map((tag: string) => tag.trim()) : ['General'],
         website: safeRow[12] || '',
         requirements: safeRow[13] || 'No specific requirements',
-        eventDate: safeRow[14] || '', // Event Date ada di kolom O (index 14)
+        eventDate: safeRow[14] || '',
       };
     });
 
     console.log('✅ Successfully processed', competitions.length, 'competitions');
     console.log('📊 Sample competition:', competitions[0]);
+    console.log('🔍 Used range:', usedRange);
     return competitions;
   } catch (error) {
     console.error('❌ Error fetching competitions from Google Sheets:', error);
@@ -121,7 +172,7 @@ export async function getCompetitionsFromSheet(): Promise<Competition[]> {
       message: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : undefined
     });
-    throw error; // Re-throw error instead of returning empty array
+    throw error;
   }
 }
 

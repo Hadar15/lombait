@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Configure allowed image domains
+  images: {
+    domains: ['images.pexels.com'],
+  },
   // Disable static generation for API routes
   async headers() {
     return [

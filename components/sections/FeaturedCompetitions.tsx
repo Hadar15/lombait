@@ -40,7 +40,16 @@ export default function FeaturedCompetitions() {
     async function fetchCompetitions() {
       try {
         console.log('🔍 Fetching competitions from API...');
-        const response = await fetch('/api/competitions');
+        
+        // Add cache-busting parameter
+        const timestamp = new Date().getTime();
+        const response = await fetch(`/api/competitions?t=${timestamp}`, {
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
+          }
+        });
         
         if (!response.ok) {
           console.error('❌ HTTP error:', response.status, response.statusText);
@@ -49,6 +58,7 @@ export default function FeaturedCompetitions() {
         
         const data = await response.json();
         console.log('✅ API Response:', data);
+        console.log('📊 Number of competitions:', data.competitions?.length || 0);
         
         if (data.error) {
           console.error('❌ API returned error:', data.error);
@@ -57,6 +67,8 @@ export default function FeaturedCompetitions() {
         
         // Check if data has competitions array
         if (data.competitions && Array.isArray(data.competitions)) {
+          console.log('✅ Valid competitions data received');
+          console.log('📋 Competition IDs:', data.competitions.map((c: any) => c.id));
           setCompetitions(data.competitions);
           console.log('✅ Set competitions:', data.competitions.length, 'items');
         } else {

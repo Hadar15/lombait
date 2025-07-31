@@ -4,6 +4,7 @@ import { getCompetitionsFromSheet } from '@/lib/google-sheets';
 export async function GET() {
   try {
     console.log('🚀 API Route: /api/competitions called');
+    console.log('⏰ Timestamp:', new Date().toISOString());
     
     // Check if environment variables are set
     const hasGoogleSheetsConfig = process.env.GOOGLE_SHEETS_CLIENT_EMAIL && 
@@ -19,11 +20,19 @@ export async function GET() {
     }
 
     // Fetch from Google Sheets
-    console.log('🔍 Fetching competitions from Google Sheets');
+    console.log('🔍 Fetching competitions from Google Sheets...');
     const competitions = await getCompetitionsFromSheet();
     
     console.log('✅ Returning', competitions.length, 'competitions from Google Sheets');
-    return NextResponse.json({ competitions });
+    console.log('📊 Competition IDs:', competitions.map(c => c.id));
+    
+    // Add cache-busting headers
+    const response = NextResponse.json({ competitions });
+    response.headers.set('Cache-Control', 'no-store, must-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    
+    return response;
     
   } catch (error) {
     console.error('❌ Error in /api/competitions:', error);
