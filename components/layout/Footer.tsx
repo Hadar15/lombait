@@ -7,13 +7,11 @@ import { useInView } from 'react-intersection-observer';
 
 const footerLinks = {
   platform: [
-    { name: 'Lomba IT', href: '/competitions' },
     { name: 'Event Tech', href: '/events' },
     { name: 'Bootcamp', href: '/bootcamp' },
     { name: 'Workshop', href: '/workshop' },
   ],
   company: [
-    { name: 'Tentang Kami', href: '/about' },
     { name: 'Tim', href: '/team' },
     { name: 'Karir', href: '/careers' },
     { name: 'Blog', href: '/blog' },
@@ -21,7 +19,6 @@ const footerLinks = {
   support: [
     { name: 'FAQ', href: '/faq' },
     { name: 'Bantuan', href: '/help' },
-    { name: 'Kontak', href: '/contact' },
     { name: 'Status', href: '/status' },
   ],
   legal: [
