@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/sonner';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PageTransitionWrapper from '@/components/animations/PageTransitionWrapper';
+import ScrollToTop from '@/components/layout/ScrollToTop';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -30,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang="id" className={`${inter.variable} ${montserrat.variable}`}>
       <body className="bg-black text-white antialiased overflow-x-hidden">
+        <ScrollToTop />
         <Navbar />
         <PageTransitionWrapper>
           {children}

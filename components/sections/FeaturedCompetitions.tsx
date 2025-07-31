@@ -120,7 +120,7 @@ export default function FeaturedCompetitions() {
   });
 
   return (
-    <section id="competitions" className="py-16 sm:py-20 lg:py-24 xl:py-28 bg-gradient-to-br from-gray-900 via-black to-gray-900 px-4 sm:px-6 lg:px-8 relative overflow-hidden" ref={ref}>
+    <section id="competitions" className="pt-24 sm:pt-28 lg:pt-32 xl:pt-36 pb-16 sm:pb-20 lg:pb-24 xl:pb-28 bg-gradient-to-br from-gray-900 via-black to-gray-900 px-4 sm:px-6 lg:px-8 relative overflow-hidden" ref={ref}>
       {/* Animated Background Elements */}
       <div className="absolute inset-0">
         <motion.div
