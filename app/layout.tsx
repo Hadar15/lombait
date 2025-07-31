@@ -1,21 +1,10 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter, Montserrat } from 'next/font/google';
 import { Toaster } from '@/components/ui/sonner';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PageTransitionWrapper from '@/components/animations/PageTransitionWrapper';
 import ScrollToTop from '@/components/layout/ScrollToTop';
-
-const inter = Inter({ 
-  subsets: ['latin'],
-  variable: '--font-inter',
-});
-
-const montserrat = Montserrat({ 
-  subsets: ['latin'],
-  variable: '--font-montserrat',
-});
 
 export const metadata: Metadata = {
   title: 'Lomba.it - Platform Lomba IT Terlengkap',
@@ -29,8 +18,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className={`${inter.variable} ${montserrat.variable}`}>
-      <body className="bg-black text-white antialiased overflow-x-hidden">
+    <html lang="id">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet"
+          media="print"
+          onLoad="this.media='all'"
+        />
+        <noscript>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet"
+          />
+        </noscript>
+      </head>
+      <body className="bg-black text-white antialiased overflow-x-hidden font-inter">
         <ScrollToTop />
         <Navbar />
         <PageTransitionWrapper>
