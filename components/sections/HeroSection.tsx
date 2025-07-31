@@ -16,6 +16,14 @@ export default function HeroSection() {
     }
   }
 
+  // Fungsi scroll ke bagian featured competitions
+  function scrollToCompetitions() {
+    const competitionsSection = document.getElementById('competitions') as HTMLElement;
+    if (competitionsSection) {
+      competitionsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -126,13 +134,14 @@ export default function HeroSection() {
               size="lg" 
               className="bg-blue-600 hover:bg-blue-700 text-white px-8 sm:px-12 lg:px-16 py-4 sm:py-5 text-lg sm:text-xl lg:text-2xl font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
-              Mulai Kompetisi
+              Cari Partner Lomba
               <ArrowRight className="ml-3 h-5 w-5 sm:h-6 sm:w-6" />
             </Button>
             <Button 
               size="lg" 
               variant="outline" 
               className="border-gray-600 text-gray-200 hover:bg-gray-800 px-8 sm:px-12 lg:px-16 py-4 sm:py-5 text-lg sm:text-xl lg:text-2xl font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+              onClick={scrollToCompetitions}
             >
               Lihat Semua Lomba
             </Button>
