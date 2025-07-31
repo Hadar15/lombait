@@ -51,6 +51,7 @@
     "eslint": "8.49.0",
     "eslint-config-next": "13.5.1",
     "framer-motion": "^12.23.12",
+    "googleapis": "^154.1.0",
     "gsap": "^3.13.0",
     "input-otp": "^1.2.4",
     "locomotive-scroll": "^4.1.4",

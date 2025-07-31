@@ -4,104 +4,27 @@ import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Calendar, MapPin, Users, Trophy, Sparkles, Search, Filter, Clock } from 'lucide-react';
+import { Calendar, MapPin, Users, Trophy, Sparkles, Search } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const competitions = [
-  {
-    id: 1,
-    title: "Hackathon Nasional 2024",
-    description: "Kompetisi pengembangan aplikasi inovatif untuk solusi masalah sosial dan teknologi",
-    category: "Hackathon",
-    prize: "Rp 50.000.000",
-    participants: 150,
-    location: "Jakarta",
-    date: "15-17 Desember 2024",
-    status: "active",
-    difficulty: "Advanced",
-    duration: "48 Jam",
-    organizer: "Kementerian Komunikasi dan Informatika",
-    tags: ["Web Development", "Mobile App", "AI/ML"]
-  },
-  {
-    id: 2,
-    title: "Programming Contest Universitas",
-    description: "Kompetisi algoritma dan struktur data tingkat nasional untuk mahasiswa",
-    category: "Programming",
-    prize: "Rp 25.000.000",
-    participants: 300,
-    location: "Online",
-    date: "20 Desember 2024",
-    status: "active",
-    difficulty: "Intermediate",
-    duration: "5 Jam",
-    organizer: "Universitas Indonesia",
-    tags: ["Algorithm", "Data Structure", "Competitive Programming"]
-  },
-  {
-    id: 3,
-    title: "AI Innovation Challenge",
-    description: "Kompetisi pengembangan AI untuk industri 4.0 dan smart city",
-    category: "AI/ML",
-    prize: "Rp 75.000.000",
-    participants: 80,
-    location: "Bandung",
-    date: "10-12 Januari 2025",
-    status: "upcoming",
-    difficulty: "Expert",
-    duration: "72 Jam",
-    organizer: "Google Indonesia",
-    tags: ["Machine Learning", "Deep Learning", "Computer Vision"]
-  },
-  {
-    id: 4,
-    title: "Cybersecurity Capture The Flag",
-    description: "Kompetisi keamanan siber untuk menguji kemampuan hacking etis",
-    category: "Cybersecurity",
-    prize: "Rp 30.000.000",
-    participants: 120,
-    location: "Surabaya",
-    date: "5-6 Januari 2025",
-    status: "upcoming",
-    difficulty: "Advanced",
-    duration: "24 Jam",
-    organizer: "Kaspersky Indonesia",
-    tags: ["Penetration Testing", "Forensics", "Reverse Engineering"]
-  },
-  {
-    id: 5,
-    title: "Game Development Contest",
-    description: "Kompetisi pengembangan game indie dengan tema Indonesia",
-    category: "Game Development",
-    prize: "Rp 40.000.000",
-    participants: 95,
-    location: "Yogyakarta",
-    date: "25-27 Januari 2025",
-    status: "upcoming",
-    difficulty: "Intermediate",
-    duration: "48 Jam",
-    organizer: "Unity Indonesia",
-    tags: ["Unity", "Game Design", "3D Modeling"]
-  },
-  {
-    id: 6,
-    title: "Data Science Competition",
-    description: "Kompetisi analisis data untuk prediksi dan optimasi bisnis",
-    category: "Data Science",
-    prize: "Rp 35.000.000",
-    participants: 200,
-    location: "Online",
-    date: "15-20 Januari 2025",
-    status: "upcoming",
-    difficulty: "Advanced",
-    duration: "7 Hari",
-    organizer: "Microsoft Indonesia",
-    tags: ["Data Analysis", "Statistics", "Business Intelligence"]
-  }
-];
-
-const categories = ["Semua", "Hackathon", "Programming", "AI/ML", "Cybersecurity", "Game Development", "Data Science"];
+interface Competition {
+  id: string;
+  title: string;
+  description: string;
+  participants: number;
+  prize: string;
+  location: string;
+  registrationDeadline: string;
+  organizer: string;
+  image: string;
+  status: 'Active' | 'Upcoming' | 'Completed';
+  category: string;
+  tags: string[];
+  website?: string;
+  requirements?: string;
+  eventDate?: string;
+}
 
 export default function FeaturedCompetitions() {
   const { ref, inView } = useInView({
@@ -109,15 +32,70 @@ export default function FeaturedCompetitions() {
     triggerOnce: true,
   });
 
-  const [selectedCategory, setSelectedCategory] = useState("Semua");
   const [searchTerm, setSearchTerm] = useState("");
+  const [competitions, setCompetitions] = useState<Competition[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchCompetitions() {
+      try {
+        console.log('🔍 Fetching competitions from API...');
+        const response = await fetch('/api/competitions');
+        
+        if (!response.ok) {
+          console.error('❌ HTTP error:', response.status, response.statusText);
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('✅ API Response:', data);
+        
+        if (data.error) {
+          console.error('❌ API returned error:', data.error);
+          throw new Error(data.error);
+        }
+        
+        // Check if data has competitions array
+        if (data.competitions && Array.isArray(data.competitions)) {
+          setCompetitions(data.competitions);
+          console.log('✅ Set competitions:', data.competitions.length, 'items');
+        } else {
+          console.error('❌ Invalid API response format:', data);
+          throw new Error('Invalid API response format');
+        }
+      } catch (error) {
+        console.error('❌ Error fetching competitions:', error);
+        console.error('🔍 Error details:', {
+          message: error instanceof Error ? error.message : 'Unknown error',
+          stack: error instanceof Error ? error.stack : undefined
+        });
+        
+        // Set empty array instead of fallback data
+        setCompetitions([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchCompetitions();
+  }, []);
 
   const filteredCompetitions = competitions.filter(competition => {
-    const matchesCategory = selectedCategory === "Semua" || competition.category === selectedCategory;
     const matchesSearch = competition.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         competition.description.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesCategory && matchesSearch;
+                         competition.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         competition.organizer.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesSearch;
   });
+
+  if (loading) {
+    return (
+      <section className="pt-24 pb-16 bg-gradient-to-br from-gray-900 via-black to-gray-900">
+        <div className="container mx-auto text-center">
+          <div className="text-white text-xl">Loading competitions...</div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="competitions" className="pt-24 sm:pt-28 lg:pt-32 xl:pt-36 pb-16 sm:pb-20 lg:pb-24 xl:pb-28 bg-gradient-to-br from-gray-900 via-black to-gray-900 px-4 sm:px-6 lg:px-8 relative overflow-hidden" ref={ref}>
@@ -209,22 +187,6 @@ export default function FeaturedCompetitions() {
                 className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
               />
             </div>
-            
-            {/* Category Filter */}
-            <div className="relative">
-              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="pl-10 pr-8 py-3 bg-gray-800/50 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 appearance-none cursor-pointer"
-              >
-                {categories.map((category) => (
-                  <option key={category} value={category} className="bg-gray-800 text-white">
-                    {category}
-                  </option>
-                ))}
-              </select>
-            </div>
           </div>
         </motion.div>
 
@@ -266,27 +228,42 @@ export default function FeaturedCompetitions() {
                   className="absolute top-4 right-4 w-2 h-2 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100"
                 />
                 
-                <CardHeader className="p-6 lg:p-8 relative z-10">
-                  <div className="flex justify-between items-start mb-4">
+                {/* Image Section */}
+                <div className="relative h-48 overflow-hidden">
+                  <motion.img
+                    src={competition.image}
+                    alt={competition.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  {/* Badge overlay */}
+                  <div className="absolute top-4 left-4">
                     <motion.div
                       whileHover={{ scale: 1.1 }}
                       transition={{ duration: 0.2 }}
                     >
                       <Badge 
-                        variant={competition.status === 'active' ? 'default' : 'secondary'}
-                        className="mb-2 text-xs px-3 py-1"
+                        variant="default"
+                        className="text-xs px-3 py-1"
                       >
-                        {competition.status === 'active' ? 'Aktif' : 'Segera'}
+                        {competition.status === 'Active' ? 'Aktif' : competition.status === 'Upcoming' ? 'Segera' : 'Selesai'}
                       </Badge>
                     </motion.div>
-                    <motion.div
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      <Trophy className="h-5 w-5 lg:h-6 lg:w-6 text-yellow-500" />
-                    </motion.div>
                   </div>
-                  
+                  {/* Trophy icon overlay */}
+                  <motion.div
+                    className="absolute top-4 right-4"
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Trophy className="h-5 w-5 lg:h-6 lg:w-6 text-yellow-500 drop-shadow-lg" />
+                  </motion.div>
+                </div>
+                
+                <CardHeader className="p-6 lg:p-8 relative z-10">
                   <CardTitle className="text-white text-xl lg:text-2xl mb-3 font-bold leading-tight group-hover:text-blue-400 transition-colors duration-300">
                     {competition.title}
                   </CardTitle>
@@ -294,25 +271,6 @@ export default function FeaturedCompetitions() {
                   <CardDescription className="text-gray-400 text-sm leading-relaxed mb-4">
                     {competition.description}
                   </CardDescription>
-                  
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {competition.tags.slice(0, 2).map((tag, tagIndex) => (
-                      <motion.span
-                        key={tagIndex}
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.2 }}
-                        className="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded-full"
-                      >
-                        {tag}
-                      </motion.span>
-                    ))}
-                    {competition.tags.length > 2 && (
-                      <span className="text-xs text-gray-500 px-2 py-1">
-                        +{competition.tags.length - 2} lagi
-                      </span>
-                    )}
-                  </div>
                 </CardHeader>
                 
                 <CardContent className="p-6 lg:p-8 pt-0 relative z-10">
@@ -323,7 +281,7 @@ export default function FeaturedCompetitions() {
                       transition={{ duration: 0.2 }}
                     >
                       <Calendar className="h-4 w-4 mr-3 flex-shrink-0" />
-                      <span className="text-sm">{competition.date}</span>
+                      <span className="text-sm">Deadline: {competition.registrationDeadline}</span>
                     </motion.div>
                     <motion.div 
                       className="flex items-center text-gray-300"
@@ -341,14 +299,6 @@ export default function FeaturedCompetitions() {
                       <Users className="h-4 w-4 mr-3 flex-shrink-0" />
                       <span className="text-sm">{competition.participants} peserta</span>
                     </motion.div>
-                    <motion.div 
-                      className="flex items-center text-gray-300"
-                      whileHover={{ x: 5 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <Clock className="h-4 w-4 mr-3 flex-shrink-0" />
-                      <span className="text-sm">{competition.duration}</span>
-                    </motion.div>
                   </div>
                   
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
@@ -360,16 +310,6 @@ export default function FeaturedCompetitions() {
                         transition={{ duration: 0.2 }}
                       >
                         {competition.prize}
-                      </motion.p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-xs text-gray-400 mb-1">Tingkat</p>
-                      <motion.p 
-                        className="text-sm font-semibold text-orange-400"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        {competition.difficulty}
                       </motion.p>
                     </div>
                   </div>
