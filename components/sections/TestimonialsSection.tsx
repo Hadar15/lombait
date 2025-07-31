@@ -1,16 +1,17 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Star, Quote } from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import { Quote, Star } from 'lucide-react';
+import Image from 'next/image';
 
 const testimonials = [
   {
-    name: 'Rizki Pratama',
-    role: 'Software Engineer',
+    name: 'Budi Santoso',
+    role: 'Full Stack Developer',
     company: 'Tech Startup',
-    image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-    content: 'Platform lomba.it sangat membantu saya menemukan kompetisi programming yang sesuai dengan skill saya. Interfacenya elegant dan mudah digunakan.',
+    image: 'https://images.pexels.com/photos/3760373/pexels-photo-3760373.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
+    content: 'Platform ini sangat membantu saya menemukan kompetisi yang sesuai dengan skill dan jadwal saya. Interface yang user-friendly dan informasi yang lengkap.',
     rating: 5,
   },
   {
@@ -83,15 +84,17 @@ export default function TestimonialsSection() {
 
                 {/* Content */}
                 <blockquote className="text-gray-300 leading-relaxed mb-6 sm:mb-8 text-sm sm:text-base lg:text-lg relative z-10">
-                  "{testimonial.content}"
+                  &ldquo;{testimonial.content}&rdquo;
                 </blockquote>
 
                 {/* Author */}
                 <div className="flex items-center">
                   <div className="relative">
-                    <img
+                    <Image
                       src={testimonial.image}
                       alt={testimonial.name}
+                      width={64}
+                      height={64}
                       className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full object-cover border-2 border-cyan-400/20 group-hover:border-cyan-400/50 transition-all duration-300"
                     />
                     <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
