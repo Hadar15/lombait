@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 
 const navigation = [
   { name: 'Beranda', href: '/' },
-  { name: 'Lomba', href: '/competitions' },
+  { name: 'Lomba', href: '#competitions' },
   { name: 'Event', href: '/events' },
   { name: 'Tentang', href: '/about' },
   { name: 'Kontak', href: '/contact' },
@@ -26,6 +26,17 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleNavigationClick = (href: string, e: React.MouseEvent) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        setIsOpen(false);
+      }
+    }
+  };
 
   return (
     <motion.nav
@@ -72,16 +83,7 @@ export default function Navbar() {
             <motion.div
               whileHover={{ 
                 rotate: 360,
-                scale: 1.1,
                 transition: { duration: 0.5 }
-              }}
-              animate={{
-                y: [0, -2, 0],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut"
               }}
               className="p-2 md:p-3 lg:p-4 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-xl shadow-lg"
             >
@@ -122,6 +124,7 @@ export default function Navbar() {
                 >
                   <Link
                     href={item.href}
+                    onClick={(e) => handleNavigationClick(item.href, e)}
                     className="text-gray-300 hover:text-cyan-400 px-3 py-2 text-base md:text-lg lg:text-xl font-semibold transition-colors duration-200 relative group"
                   >
                     <motion.span
@@ -230,7 +233,10 @@ export default function Navbar() {
                 >
                   <Link
                     href={item.href}
-                    onClick={() => setIsOpen(false)}
+                    onClick={(e) => {
+                      handleNavigationClick(item.href, e);
+                      setIsOpen(false);
+                    }}
                     className="text-gray-300 hover:text-cyan-400 block px-3 py-3 text-base sm:text-lg font-medium transition-colors duration-200 rounded-lg hover:bg-gray-800/50"
                   >
                     {item.name}

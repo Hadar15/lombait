@@ -8,7 +8,9 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       <HeroSection />
-      <FeaturedCompetitions />
+      <div id="after-hero">
+        <FeaturedCompetitions />
+      </div>
       <StatsSection />
       <TestimonialsSection />
       <NewsletterSection />
