@@ -27,11 +27,20 @@ export async function GET() {
       });
     }
     
+    // Fix private key format
+    let formattedPrivateKey = privateKey;
+    if (formattedPrivateKey) {
+      // Remove quotes if present
+      formattedPrivateKey = formattedPrivateKey.replace(/^["']|["']$/g, '');
+      // Replace literal \n with actual newlines
+      formattedPrivateKey = formattedPrivateKey.replace(/\\n/g, '\n');
+    }
+    
     // Test authentication
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: clientEmail,
-        private_key: privateKey.replace(/\\n/g, '\n'),
+        private_key: formattedPrivateKey,
       },
       scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
     });

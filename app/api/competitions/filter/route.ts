@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getFilteredCompetitions } from '@/lib/google-sheets';
+import { getFilteredCompetitions, Competition } from '@/lib/google-sheets';
 
 export async function GET(request: Request) {
   try {
@@ -23,7 +23,7 @@ export async function GET(request: Request) {
     }
 
     // Try to fetch filtered competitions from Google Sheets
-    let competitions;
+    let competitions: Competition[] = [];
     try {
       console.log('🔍 Fetching filtered competitions from Google Sheets');
       competitions = await getFilteredCompetitions({
