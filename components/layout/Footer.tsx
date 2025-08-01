@@ -101,24 +101,20 @@ export default function Footer() {
             viewport={{ once: true }}
           >
             <Link href="/" className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6 group">
-              <motion.div
-                whileHover={{ 
-                  rotate: 360,
-                  scale: 1.1,
-                  transition: { duration: 0.5 }
-                }}
-                animate={{
-                  y: [0, -2, 0],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                className="p-1.5 sm:p-2 lg:p-3 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-lg sm:rounded-xl shadow-lg"
-              >
-                <Zap className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-black" />
-              </motion.div>
+               <motion.div
+            whileHover={{ 
+            rotate: 360,
+            scale: 1.1,
+            transition: { duration: 0.5 }
+            }}
+            className="w-fit"
+            >
+            <img
+            src="/images/logo.png"
+            alt="Logo"
+            className="h-10 w-10 object-contain"
+            />
+            </motion.div>
               <motion.span 
                 className="text-lg sm:text-xl lg:text-2xl font-montserrat font-black gradient-text"
                 whileHover={{ scale: 1.05 }}
