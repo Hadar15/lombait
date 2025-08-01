@@ -60,19 +60,19 @@ export default function Navbar() {
           {/* Centered Logo */}
           <Link href="/" className="flex items-center space-x-2 md:space-x-3 group">
             <motion.div
-  whileHover={{ 
-    rotate: 360,
-    scale: 1.1,
-    transition: { duration: 0.5 }
-  }}
-  className="p-1.5 md:p-2 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-lg shadow-lg"
->
-  <img
-    src="https://drive.google.com/uc?export=view&id=1AbCdeFghIjKlMnOpQRsTuVwXyZ" // ganti ID-nya sesuai gambar logo kamu
-    alt="Logo"
-    className="h-4 w-4 md:h-5 md:w-5 object-contain"
-  />
-</motion.div>
+            whileHover={{ 
+            rotate: 360,
+            scale: 1.1,
+            transition: { duration: 0.5 }
+            }}
+            className="w-fit"
+            >
+            <img
+            src="/images/logo.png"
+            alt="Logo"
+            className="h-6 w-6 object-contain"
+            />
+            </motion.div>
 
             <motion.span 
               className="text-lg md:text-xl font-montserrat font-black gradient-text"
