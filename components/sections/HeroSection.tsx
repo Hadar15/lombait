@@ -119,8 +119,7 @@ export default function HeroSection() {
               </span>
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-200 mb-8 sm:mb-10 lg:mb-14 w-full max-w-4xl mx-auto leading-relaxed px-4 sm:px-6 md:px-8 font-medium drop-shadow">
-              Temukan dan ikuti kompetisi teknologi terbaik. Dari hackathon hingga programming contest, 
-              semua ada di satu tempat.
+              Ikuti Seluruh kompetisi Bidang Teknologi Berskala Nasional. Dapatkan Partner Lomba Dari Seluruh Daerah Di Indonesia Untuk Menjalin Koneksi Baru.
             </p>
           </motion.div>
 
