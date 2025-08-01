@@ -54,7 +54,7 @@ export default function TestimonialsSection() {
             APA KATA <span className="gradient-text">MEREKA</span>
           </h2>
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-400 max-w-2xl sm:max-w-3xl lg:max-w-4xl mx-auto leading-relaxed">
-            Dengarkan pengalaman para developer dan designer yang telah menggunakan platform kami
+            Dengarkan pengalaman para IT Enthusiast yang telah menggunakan platform kami
           </p>
         </motion.div>
 

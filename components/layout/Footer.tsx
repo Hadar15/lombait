@@ -30,8 +30,8 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { name: 'Instagram', href: '#', icon: Instagram },
-  { name: 'Email', href: 'mailto:hello@lomba.it', icon: Mail },
+  { name: 'Instagram', href: 'https://www.instagram.com/lomba.it/', icon: Instagram },
+  { name: 'Email', href: 'https://wa.me/6282114267381', icon: Mail },
 ];
 
 export default function Footer() {

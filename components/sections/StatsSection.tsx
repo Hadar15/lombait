@@ -8,7 +8,7 @@ import { Trophy, Users, Calendar, Award, Sparkles } from 'lucide-react';
 const stats = [
   {
     icon: Trophy,
-    number: 500,
+    number: 100,
     suffix: '+',
     label: 'Lomba Aktif',
     description: 'Kompetisi teknologi dari berbagai kategori',
@@ -16,23 +16,23 @@ const stats = [
   },
   {
     icon: Users,
-    number: 10000,
+    number: 10,
     suffix: '+',
-    label: 'Peserta Aktif',
-    description: 'Developer dan tech enthusiast di seluruh Indonesia',
+    label: 'Jenis Lomba',
+    description: 'Jenis lomba yang sangat beragam dengan tema teknologi',
     color: 'from-blue-400 to-cyan-500',
   },
   {
     icon: Calendar,
-    number: 150,
+    number: 50,
     suffix: '+',
     label: 'Event Bulanan',
-    description: 'Workshop, bootcamp, dan seminar teknologi',
+    description: 'Lomba dan event yang diadakan setiap bulan',
     color: 'from-green-400 to-emerald-500',
   },
   {
     icon: Award,
-    number: 50,
+    number: 10,
     suffix: '+',
     label: 'Universitas Partner',
     description: 'Institusi pendidikan terkemuka di Indonesia',
