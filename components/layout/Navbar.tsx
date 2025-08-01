@@ -67,7 +67,7 @@ export default function Navbar() {
               }}
               className="p-1.5 md:p-2 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-lg shadow-lg"
             >
-              <Zap className="h-4 w-4 md:h-5 md:w-5 text-black" />
+              <img src='https://drive.google.com/drive/folders/1QxDK8LjQstRBWpruwzzlxnIOjVcu1bVl' alt='logo' className="h-4 w-4 md:h-5 md:w-5 text-black" />
             </motion.div>
             <motion.span 
               className="text-lg md:text-xl font-montserrat font-black gradient-text"
