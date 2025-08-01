@@ -30,11 +30,5 @@
       "source": "/api/:path*",
       "destination": "/api/:path*"
     }
-  ],
-  "crons": [
-    {
-      "path": "/api/cron/update-competitions",
-      "schedule": "*/15 * * * *"
-    }
   ]
 } 
