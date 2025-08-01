@@ -132,6 +132,7 @@ export default function HeroSection() {
             <Button 
               size="lg" 
               className="bg-blue-600 hover:bg-blue-700 text-white px-8 sm:px-12 lg:px-16 py-4 sm:py-5 text-lg sm:text-xl lg:text-2xl font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+              onClick={() => window.open("https://discord.gg/xtShYhaD4z", "_blank")}
             >
               Cari Partner Lomba
               <ArrowRight className="ml-3 h-5 w-5 sm:h-6 sm:w-6" />
