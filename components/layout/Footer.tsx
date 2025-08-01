@@ -227,8 +227,8 @@ export default function Footer() {
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {[
-              { icon: Mail, title: 'Email', value: 'hello@lomba.it' },
-              { icon: Phone, title: 'WhatsApp', value: '+62 812-3456-7890' },
+              { icon: Mail, title: 'Email', value: 'haidar.r2005@gmail.com' },
+              { icon: Phone, title: 'WhatsApp', value: '+62 821-1426-7381' },
               { icon: MapPin, title: 'Lokasi', value: 'Jakarta, Indonesia' }
             ].map((contact, index) => (
               <motion.div 
