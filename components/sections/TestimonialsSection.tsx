@@ -23,10 +23,10 @@ const testimonials = [
     rating: 5,
   },
   {
-    name: 'Ahmad Fauzi',
-    role: 'Computer Science Student',
+    name: 'Haidar Rafif Radithya',
+    role: 'Computer Engineering Student',
     company: 'Universitas Indonesia',
-    image: 'https://images.pexels.com/photos/3769021/pexels-photo-3769021.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
+    image: '/images/Haidar.jpg',
     content: 'Berkat lomba.it, saya berhasil mengikuti berbagai hackathon dan memenangkan beberapa kompetisi. Platform ini benar-benar game changer!',
     rating: 5,
   },
