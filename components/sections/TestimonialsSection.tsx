@@ -7,10 +7,10 @@ import Image from 'next/image';
 
 const testimonials = [
   {
-    name: 'Budi Santoso',
-    role: 'Full Stack Developer',
-    company: 'Tech Startup',
-    image: 'https://images.pexels.com/photos/3760373/pexels-photo-3760373.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
+    name: 'Clementheo Benaya',
+    role: 'Computer Engineering Student',
+    company: 'Universitas Indonesia',
+    image: '/images/CLEMS.jpg',
     content: 'Platform ini sangat membantu saya menemukan kompetisi yang sesuai dengan skill dan jadwal saya. Interface yang user-friendly dan informasi yang lengkap.',
     rating: 5,
   },
