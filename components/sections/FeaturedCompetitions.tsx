@@ -13,7 +13,7 @@ interface Competition {
   id: string;
   title: string;
   description: string;
-  participants: number;
+  participants: string;
   prize: string;
   location: string;
   registrationDeadline: string;
@@ -25,6 +25,7 @@ interface Competition {
   website?: string;
   requirements?: string;
   eventDate?: string;
+  ig?: string;
 }
 
 export default function FeaturedCompetitions() {
@@ -354,8 +355,11 @@ export default function FeaturedCompetitions() {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <Button className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 w-full sm:w-auto">
+                      <Button 
+                        onClick={() => window.open(competition.ig, '_blank')}
+                        className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 w-full sm:w-auto">
                         Daftar Sekarang
+                        
                       </Button>
                     </motion.div>
                   </div>

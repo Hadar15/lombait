@@ -26,6 +26,7 @@ export interface Competition {
   website?: string;
   requirements?: string;
   eventDate?: string;
+  ig?: string;
 }
 
 export async function getCompetitionsFromSheet(): Promise<Competition[]> {
@@ -78,9 +79,9 @@ export async function getCompetitionsFromSheet(): Promise<Competition[]> {
 
     // Try different ranges to ensure we get all data
     const ranges = [
-      'Competitions!A2:O',  // Full range including Event Date
+      'Competitions!A2:P',  // Full range including Event Date
       'Competitions!A2:N',  // Without Event Date
-      'Competitions!A:O',   // All columns including header
+      'Competitions!A:P',   // All columns including header
       'Competitions!A:N',   // All columns without Event Date
     ];
 
@@ -141,6 +142,7 @@ export async function getCompetitionsFromSheet(): Promise<Competition[]> {
         website: safeRow[12],
         requirements: safeRow[13],
         eventDate: safeRow[14],
+        ig: safeRow[15],
       });
       
       return {
@@ -159,6 +161,7 @@ export async function getCompetitionsFromSheet(): Promise<Competition[]> {
         website: safeRow[12] || '',
         requirements: safeRow[13] || 'No specific requirements',
         eventDate: safeRow[14] || '',
+        ig: safeRow[15] || '',
       };
     });
 
