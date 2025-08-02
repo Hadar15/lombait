@@ -14,7 +14,7 @@ export interface Competition {
   id: string;
   title: string;
   description: string;
-  participants: number;
+  participants: string;
   prize: string;
   location: string;
   registrationDeadline: string;
@@ -149,7 +149,7 @@ export async function getCompetitionsFromSheet(): Promise<Competition[]> {
         id: safeRow[0] || `comp-${index + 1}`,
         title: safeRow[1] || 'Untitled Competition',
         description: safeRow[2] || 'No description available',
-        participants: parseInt(safeRow[3]) || 0,
+        participants: (safeRow[3]) || 0,
         prize: safeRow[4] || 'TBA',
         location: safeRow[5] || 'TBA',
         registrationDeadline: safeRow[6] || 'TBA',
