@@ -108,7 +108,12 @@ export default function FeaturedCompetitions() {
     return () => clearInterval(interval);
   }, [fetchCompetitions]);
 
-  const filteredCompetitions = competitions.filter(competition => {
+  const sortedCompetitions = [...competitions].sort((a, b) => {
+    const order = { Active: 0, Upcoming: 1, Completed: 2 };
+    return order[a.status] - order[b.status];
+  });
+
+  const filteredCompetitions = sortedCompetitions.filter(competition => {
     const matchesSearch = competition.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          competition.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          competition.organizer.toLowerCase().includes(searchTerm.toLowerCase());
