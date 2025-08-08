@@ -292,7 +292,7 @@ export default function FeaturedCompetitions() {
                   />
                   
                   {/* Image Section */}
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative aspect-[4/5] overflow-hidden">
                     <motion.img
                       src={competition.image}
                       alt={competition.title}
@@ -444,14 +444,14 @@ export default function FeaturedCompetitions() {
             />
             
             {/* Modal Content */}
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0, y: 50 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.8, opacity: 0, y: 50 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-gray-900 rounded-2xl shadow-2xl border border-gray-700"
-              onClick={(e) => e.stopPropagation()}
-            >
+                         <motion.div
+               initial={{ scale: 0.8, opacity: 0, y: 50 }}
+               animate={{ scale: 1, opacity: 1, y: 0 }}
+               exit={{ scale: 0.8, opacity: 0, y: 50 }}
+               transition={{ type: "spring", damping: 25, stiffness: 300 }}
+               className="relative w-full max-w-2xl max-h-[95vh] overflow-y-auto bg-gray-900 rounded-2xl shadow-2xl border border-gray-700"
+               onClick={(e) => e.stopPropagation()}
+             >
               {/* Close Button */}
               <motion.button
                 whileHover={{ scale: 1.1, rotate: 90 }}
@@ -462,16 +462,16 @@ export default function FeaturedCompetitions() {
                 <X className="h-6 w-6" />
               </motion.button>
 
-              {/* Large Image */}
-              <div className="relative h-64 sm:h-80 lg:h-96 overflow-hidden rounded-t-2xl">
-                <motion.img
-                  src={selectedCompetition.image}
-                  alt={selectedCompetition.title}
-                  className="w-full h-full object-cover"
-                  initial={{ scale: 1.1 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                />
+                             {/* Large Image */}
+               <div className="relative aspect-[4/5] max-h-[70vh] overflow-hidden rounded-t-2xl">
+                 <motion.img
+                   src={selectedCompetition.image}
+                   alt={selectedCompetition.title}
+                   className="w-full h-full object-cover"
+                   initial={{ scale: 1.1 }}
+                   animate={{ scale: 1 }}
+                   transition={{ duration: 0.5 }}
+                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 
                 {/* Badge */}
