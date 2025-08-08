@@ -495,72 +495,74 @@ export default function FeaturedCompetitions() {
                 </div>
 
                 {/* Text Content Section - Right Side */}
-                <div className="lg:w-1/2 p-6 sm:p-8">
-                  <motion.h2 
-                    className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    {selectedCompetition.title}
-                  </motion.h2>
-                  
-                  <motion.p 
-                    className="text-gray-300 text-base sm:text-lg mb-6 leading-relaxed"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                  >
-                    {selectedCompetition.description}
-                  </motion.p>
-
-                  <div className="space-y-6 mb-8">
-                    <motion.div 
-                      className="space-y-4"
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.4 }}
+                <div className="lg:w-1/2 p-6 sm:p-8 lg:p-10 flex flex-col justify-between min-h-[600px]">
+                  <div className="flex-1">
+                    <motion.h2 
+                      className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-6 leading-tight"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
                     >
-                      <div className="flex items-center text-gray-300">
-                        <Calendar className="h-5 w-5 mr-3 flex-shrink-0" />
-                        <span className="text-base">Deadline: {selectedCompetition.registrationDeadline}</span>
-                      </div>
-                      <div className="flex items-center text-gray-300">
-                        <MapPin className="h-5 w-5 mr-3 flex-shrink-0" />
-                        <span className="text-base">{selectedCompetition.location}</span>
-                      </div>
-                      <div className="flex items-center text-gray-300">
-                        <Users className="h-5 w-5 mr-3 flex-shrink-0" />
-                        <span className="text-base">{selectedCompetition.participants} peserta</span>
-                      </div>
-                    </motion.div>
+                      {selectedCompetition.title}
+                    </motion.h2>
                     
-                    <motion.div 
-                      className="space-y-4"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.5 }}
+                    <motion.p 
+                      className="text-lg sm:text-xl lg:text-2xl text-gray-300 mb-8 leading-relaxed"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
                     >
-                      <div>
-                        <p className="text-sm text-gray-400 mb-2">Total Hadiah</p>
-                        <p className="text-2xl font-bold text-green-400">{selectedCompetition.prize}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-400 mb-2">Organizer</p>
-                        <p className="text-base text-white">{selectedCompetition.organizer}</p>
-                      </div>
-                    </motion.div>
+                      {selectedCompetition.description}
+                    </motion.p>
+
+                    <div className="space-y-8 mb-8">
+                      <motion.div 
+                        className="space-y-6"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.4 }}
+                      >
+                        <div className="flex items-center text-gray-300">
+                          <Calendar className="h-6 w-6 mr-4 flex-shrink-0" />
+                          <span className="text-lg sm:text-xl">Deadline: {selectedCompetition.registrationDeadline}</span>
+                        </div>
+                        <div className="flex items-center text-gray-300">
+                          <MapPin className="h-6 w-6 mr-4 flex-shrink-0" />
+                          <span className="text-lg sm:text-xl">{selectedCompetition.location}</span>
+                        </div>
+                        <div className="flex items-center text-gray-300">
+                          <Users className="h-6 w-6 mr-4 flex-shrink-0" />
+                          <span className="text-lg sm:text-xl">{selectedCompetition.participants} peserta</span>
+                        </div>
+                      </motion.div>
+                      
+                      <motion.div 
+                        className="space-y-6"
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.5 }}
+                      >
+                        <div>
+                          <p className="text-base text-gray-400 mb-3">Total Hadiah</p>
+                          <p className="text-3xl sm:text-4xl font-bold text-green-400">{selectedCompetition.prize}</p>
+                        </div>
+                        <div>
+                          <p className="text-base text-gray-400 mb-3">Organizer</p>
+                          <p className="text-lg sm:text-xl text-white">{selectedCompetition.organizer}</p>
+                        </div>
+                      </motion.div>
+                    </div>
                   </div>
 
                   <motion.div 
-                    className="flex flex-col sm:flex-row gap-4"
+                    className="flex flex-col sm:flex-row gap-4 mt-auto"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 }}
                   >
                     <Button 
                       onClick={() => window.open(selectedCompetition.ig, '_blank')}
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 flex-1 sm:flex-none"
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 text-lg font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 flex-1 sm:flex-none"
                     >
                       Daftar Sekarang
                     </Button>
