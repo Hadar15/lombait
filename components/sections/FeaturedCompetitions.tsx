@@ -444,14 +444,14 @@ export default function FeaturedCompetitions() {
             />
             
             {/* Modal Content */}
-                         <motion.div
-               initial={{ scale: 0.8, opacity: 0, y: 50 }}
-               animate={{ scale: 1, opacity: 1, y: 0 }}
-               exit={{ scale: 0.8, opacity: 0, y: 50 }}
-               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-               className="relative w-full max-w-2xl max-h-[95vh] overflow-y-auto bg-gray-900 rounded-2xl shadow-2xl border border-gray-700"
-               onClick={(e) => e.stopPropagation()}
-             >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0, y: 50 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: 50 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative w-full max-w-6xl max-h-[95vh] overflow-y-auto bg-gray-900 rounded-2xl shadow-2xl border border-gray-700"
+              onClick={(e) => e.stopPropagation()}
+            >
               {/* Close Button */}
               <motion.button
                 whileHover={{ scale: 1.1, rotate: 90 }}
@@ -462,105 +462,110 @@ export default function FeaturedCompetitions() {
                 <X className="h-6 w-6" />
               </motion.button>
 
-                             {/* Large Image */}
-               <div className="relative aspect-[4/5] max-h-[70vh] overflow-hidden rounded-t-2xl">
-                 <motion.img
-                   src={selectedCompetition.image}
-                   alt={selectedCompetition.title}
-                   className="w-full h-full object-cover"
-                   initial={{ scale: 1.1 }}
-                   animate={{ scale: 1 }}
-                   transition={{ duration: 0.5 }}
-                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                
-                {/* Badge */}
-                <div className="absolute top-4 left-4">
-                  <Badge 
-                    variant="default"
-                    className="text-sm px-4 py-2"
-                  >
-                    {selectedCompetition.status === 'Active' ? 'Aktif' : selectedCompetition.status === 'Upcoming' ? 'Segera' : 'Selesai'}
-                  </Badge>
+              {/* Content Layout - Poster Left, Text Right */}
+              <div className="flex flex-col lg:flex-row">
+                {/* Poster Section - Left Side */}
+                <div className="lg:w-1/2 lg:min-h-[600px]">
+                  <div className="relative h-full min-h-[400px] lg:min-h-[600px] overflow-hidden rounded-t-2xl lg:rounded-l-2xl lg:rounded-tr-none">
+                    <motion.img
+                      src={selectedCompetition.image}
+                      alt={selectedCompetition.title}
+                      className="w-full h-full object-cover"
+                      initial={{ scale: 1.1 }}
+                      animate={{ scale: 1 }}
+                      transition={{ duration: 0.5 }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    
+                    {/* Badge */}
+                    <div className="absolute top-4 left-4">
+                      <Badge 
+                        variant="default"
+                        className="text-sm px-4 py-2"
+                      >
+                        {selectedCompetition.status === 'Active' ? 'Aktif' : selectedCompetition.status === 'Upcoming' ? 'Segera' : 'Selesai'}
+                      </Badge>
+                    </div>
+                    
+                    {/* Trophy */}
+                    <div className="absolute top-4 right-4">
+                      <Trophy className="h-8 w-8 text-yellow-500 drop-shadow-lg" />
+                    </div>
+                  </div>
                 </div>
-                
-                {/* Trophy */}
-                <div className="absolute top-4 right-12">
-                  <Trophy className="h-8 w-8 text-yellow-500 drop-shadow-lg" />
-                </div>
-              </div>
 
-              {/* Content */}
-              <div className="p-6 sm:p-8">
-                <motion.h2 
-                  className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  {selectedCompetition.title}
-                </motion.h2>
-                
-                <motion.p 
-                  className="text-gray-300 text-base sm:text-lg mb-6 leading-relaxed"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  {selectedCompetition.description}
-                </motion.p>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-                  <motion.div 
-                    className="space-y-4"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.4 }}
+                {/* Text Content Section - Right Side */}
+                <div className="lg:w-1/2 p-6 sm:p-8">
+                  <motion.h2 
+                    className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
                   >
-                    <div className="flex items-center text-gray-300">
-                      <Calendar className="h-5 w-5 mr-3 flex-shrink-0" />
-                      <span className="text-base">Deadline: {selectedCompetition.registrationDeadline}</span>
-                    </div>
-                    <div className="flex items-center text-gray-300">
-                      <MapPin className="h-5 w-5 mr-3 flex-shrink-0" />
-                      <span className="text-base">{selectedCompetition.location}</span>
-                    </div>
-                    <div className="flex items-center text-gray-300">
-                      <Users className="h-5 w-5 mr-3 flex-shrink-0" />
-                      <span className="text-base">{selectedCompetition.participants} peserta</span>
-                    </div>
-                  </motion.div>
+                    {selectedCompetition.title}
+                  </motion.h2>
                   
-                  <motion.div 
-                    className="space-y-4"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 }}
+                  <motion.p 
+                    className="text-gray-300 text-base sm:text-lg mb-6 leading-relaxed"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
                   >
-                    <div>
-                      <p className="text-sm text-gray-400 mb-2">Total Hadiah</p>
-                      <p className="text-2xl font-bold text-green-400">{selectedCompetition.prize}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-400 mb-2">Organizer</p>
-                      <p className="text-base text-white">{selectedCompetition.organizer}</p>
-                    </div>
+                    {selectedCompetition.description}
+                  </motion.p>
+
+                  <div className="space-y-6 mb-8">
+                    <motion.div 
+                      className="space-y-4"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.4 }}
+                    >
+                      <div className="flex items-center text-gray-300">
+                        <Calendar className="h-5 w-5 mr-3 flex-shrink-0" />
+                        <span className="text-base">Deadline: {selectedCompetition.registrationDeadline}</span>
+                      </div>
+                      <div className="flex items-center text-gray-300">
+                        <MapPin className="h-5 w-5 mr-3 flex-shrink-0" />
+                        <span className="text-base">{selectedCompetition.location}</span>
+                      </div>
+                      <div className="flex items-center text-gray-300">
+                        <Users className="h-5 w-5 mr-3 flex-shrink-0" />
+                        <span className="text-base">{selectedCompetition.participants} peserta</span>
+                      </div>
+                    </motion.div>
+                    
+                    <motion.div 
+                      className="space-y-4"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.5 }}
+                    >
+                      <div>
+                        <p className="text-sm text-gray-400 mb-2">Total Hadiah</p>
+                        <p className="text-2xl font-bold text-green-400">{selectedCompetition.prize}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-400 mb-2">Organizer</p>
+                        <p className="text-base text-white">{selectedCompetition.organizer}</p>
+                      </div>
+                    </motion.div>
+                  </div>
+
+                  <motion.div 
+                    className="flex flex-col sm:flex-row gap-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                  >
+                    <Button 
+                      onClick={() => window.open(selectedCompetition.ig, '_blank')}
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 flex-1 sm:flex-none"
+                    >
+                      Daftar Sekarang
+                    </Button>
                   </motion.div>
                 </div>
-
-                <motion.div 
-                  className="flex flex-col sm:flex-row gap-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                >
-                  <Button 
-                    onClick={() => window.open(selectedCompetition.ig, '_blank')}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 flex-1 sm:flex-none"
-                  >
-                    Daftar Sekarang
-                  </Button>
-                </motion.div>
               </div>
             </motion.div>
           </motion.div>
